@@ -1,27 +1,17 @@
 require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
+const app = require('./src/app');
+const config = require('./src/config');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = config.port;
 
-app.use(cors());
-app.use(helmet());
-app.use(morgan('dev'));
-app.use(express.json());
-
-app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'UP' });
-});
-
+// Start server
 app.listen(PORT, () => {
   console.log(`
 🚀 CampusLearn Backend Server Started Successfully!
 📍 Server: http://localhost:${PORT}
-🌍 Environment: ${process.env.NODE_ENV || 'development'}
+🌍 Environment: ${config.nodeEnv}
 📊 Health Check: http://localhost:${PORT}/api/health
+📚 API Documentation: http://localhost:${PORT}/api
 ⏰ Started at: ${new Date().toLocaleString()}
   `);
 });
